@@ -30,11 +30,10 @@
                                         <i class="fas fa-pen"></i>
                                     </a>
 
-
-                                    <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-danger">
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                                        onclick="deleteModalHelper('{{ route('admin.categories.destroy', $category->id) }}')">
                                         <i class="fa fa-trash"></i>
-                                    </a>
-
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -44,4 +43,36 @@
             </div>
         </div>
     </div>
+    {{-- Delete Modal --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="" method="POST" id="deleteForm">
+                @csrf
+                @method('DELETE')
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete category?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Are you sure you want to delete the category?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-secondary" type="submit">Delete</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script>
+        function deleteModalHelper(url) {
+            document.getElementById("deleteForm").setAttribute('action', url);
+        }
+    </script>
 @endsection

@@ -88,8 +88,13 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        //TODO:Validte whether the category has post associated with it.uf not then only proceed.
+
+        $category->delete();
+        session()->flash('success', 'Category deleted successfully...');
+        return redirect(route('admin.categories.index'));
+
     }
 }
