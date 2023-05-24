@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Tags\CreateTagRequest;
+use App\Http\Requests\Tags\UpdateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -29,7 +31,7 @@ class TagsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateTagRequest $request)
     {
         //
 
@@ -54,24 +56,37 @@ class TagsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tag $tag)
     {
         //
+
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
         //
+
+        $tag->name = $request->name;
+        $tag->save();
+
+        session()->flash('success', 'Tag updated successfully...');
+        return redirect(route('admin.tags.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tag $tag)
     {
         //
+
+        $tag->delete();
+        session()->flash('success', 'Tag deleted successfully...');
+        return redirect(route('admin.tags.index'));
+
     }
 }
