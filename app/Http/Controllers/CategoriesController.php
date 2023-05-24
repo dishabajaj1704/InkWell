@@ -43,9 +43,11 @@ class CategoriesController extends Controller
         // request()->validate([
         //     'name'=>'required|min:3|max:255'
         // ]);
-
+        $userId = auth()->user()->id;
         Category::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'created_by' => $userId,
+            'last_updated_by' => $userId
         ]);
 
         // session()->put('success','Category created successfully...');

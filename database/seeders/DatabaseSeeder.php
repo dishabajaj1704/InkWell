@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::create([
+            'name' => 'disha',
+            'email' => 'disha17@gmail.com',
+            'password' => Hash::make('disha1234'),
+        ]);
+        \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -24,7 +31,13 @@ class DatabaseSeeder extends Seeder
         $categories = ['Sports', 'Technology', 'Gaming'];
 
         foreach ($categories as $category) {
-            Category::create(['name' => $category]);
+            $user = User::all()->random();
+            Category::create([
+                'name' => $category,
+                "created_by" => $user->id,
+                "last_updated_by" => $user->id
+
+            ]);
         }
 
 

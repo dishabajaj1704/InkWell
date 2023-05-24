@@ -13,7 +13,19 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('last_updated_by');
             $table->timestamps();
+
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('last_updated_by')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
