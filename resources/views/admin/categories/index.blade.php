@@ -72,6 +72,8 @@
 @section('scripts')
     <script>
         function deleteModalHelper(url) {
+
+            console.log(url); //   http://localhost:8000/admin/categories/2
             document.getElementById("deleteForm").setAttribute('action', url);
         }
     </script>

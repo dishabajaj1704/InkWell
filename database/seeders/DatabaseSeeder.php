@@ -41,10 +41,18 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        $tags = ['Coding', 'Programming', 'Cs'];
+        $tags = ['Coding', 'Python', 'Cs', 'Java'];
 
         foreach ($tags as $tag) {
-            Tag::create(['name' => $tag]);
+            $user = User::all()->random();
+            Tag::create([
+
+                'name' => $tag,
+                "created_by" => $user->id,
+                "last_updated_by" => $user->id
+            ]);
         }
+
+        $this->call(BlogsSeeder::class);
     }
 }

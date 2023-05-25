@@ -34,9 +34,11 @@ class TagsController extends Controller
     public function store(CreateTagRequest $request)
     {
         //
-
+        $userId = auth()->user()->id;
         Tag::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'created_by' => $userId,
+            'last_updated_by' => $userId,
         ]);
 
 

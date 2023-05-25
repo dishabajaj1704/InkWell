@@ -10,21 +10,20 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('blog_tag', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('last_updated_by');
+            $table->unsignedBigInteger('blog_id');
+            $table->unsignedBigInteger('tag_id');
             $table->timestamps();
 
-            $table->foreign('created_by')
+            $table->foreign('blog_id')
                 ->references('id')
-                ->on('users')
+                ->on('blogs')
                 ->onDelete('cascade');
 
-            $table->foreign('last_updated_by')
+            $table->foreign('tag_id')
                 ->references('id')
-                ->on('users')
+                ->on('tags')
                 ->onDelete('cascade');
         });
     }
@@ -34,6 +33,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('blog_tag');
     }
 };

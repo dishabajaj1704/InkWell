@@ -73,6 +73,7 @@
 @section('scripts')
     <script>
         function deleteModalHelper(url) {
+            console.log(url);
             document.getElementById("deleteForm").setAttribute('action', url);
         }
     </script>

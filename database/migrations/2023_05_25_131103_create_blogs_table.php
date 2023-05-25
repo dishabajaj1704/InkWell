@@ -10,21 +10,26 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('last_updated_by');
+            $table->string('title');
+            $table->string('excerpt');
+            $table->longText('body');
+            $table->string('image_path');
+            $table->timestamp('published_at')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
-            $table->foreign('created_by')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->foreign('last_updated_by')
+
+            $table->foreign('category_id')
                 ->references('id')
-                ->on('users')
+                ->on('categories')
                 ->onDelete('cascade');
         });
     }
@@ -34,6 +39,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('blogs');
     }
 };

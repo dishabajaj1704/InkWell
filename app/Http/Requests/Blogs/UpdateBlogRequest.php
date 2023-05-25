@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Categories;
+namespace App\Http\Requests\Blogs;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateBlogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,8 +23,6 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|min:3|max:255|unique:categories,name,' . $this->category->id //(except value)
-
         ];
     }
 }
