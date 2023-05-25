@@ -34,7 +34,7 @@ class BlogsSeeder extends Seeder
             'title' => fake()->sentence(7),
             'excerpt' => fake()->sentence(15),
             'body' => fake()->paragraphs(rand(3, 7), true),
-            'image_path' => 'blogs/1.jpg',
+            'image_path' => 'blogs/2.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
             'published_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -43,7 +43,7 @@ class BlogsSeeder extends Seeder
             'title' => fake()->sentence(7),
             'excerpt' => fake()->sentence(15),
             'body' => fake()->paragraphs(rand(3, 7), true),
-            'image_path' => 'blogs/1.jpg',
+            'image_path' => 'blogs/3.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
             'published_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -52,7 +52,7 @@ class BlogsSeeder extends Seeder
             'title' => fake()->sentence(7),
             'excerpt' => fake()->sentence(15),
             'body' => fake()->paragraphs(rand(3, 7), true),
-            'image_path' => 'blogs/1.jpg',
+            'image_path' => 'blogs/4.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
             'published_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -61,7 +61,7 @@ class BlogsSeeder extends Seeder
             'title' => fake()->sentence(7),
             'excerpt' => fake()->sentence(15),
             'body' => fake()->paragraphs(rand(3, 7), true),
-            'image_path' => 'blogs/1.jpg',
+            'image_path' => 'blogs/5.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
             'published_at' => Carbon::now()->format('Y-m-d H:i:s')

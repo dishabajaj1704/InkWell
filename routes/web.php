@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
@@ -32,8 +33,9 @@ Route::middleware('auth')->group(function () {
             return view('admin.dashboard');
         })->name('dashboard');
 
-        Route::resource('categories', CategoriesController::class);
-        Route::resource('tags', TagsController::class);
+        Route::resource('categories', CategoriesController::class)->except('show');
+        Route::resource('tags', TagsController::class)->except('show');
+        Route::resource('blogs', BlogsController::class);
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
