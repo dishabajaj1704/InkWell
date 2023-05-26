@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function () {
             return view('admin.dashboard');
         })->name('dashboard');
 
+        Route::get('/blogs/trashed', [BlogsController::class, 'trashed'])->name('blogs.trashed');
+        Route::delete('/blogs/{blog}/trash', [BlogsController::class, 'trash'])->name('blogs.trash');
+        Route::put('/blogs/{blog}/restore', [BlogsController::class, 'restore'])->name('blogs.restore');
+
         Route::resource('categories', CategoriesController::class)->except('show');
         Route::resource('tags', TagsController::class)->except('show');
         Route::resource('blogs', BlogsController::class);
@@ -40,6 +44,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
     });
 
 

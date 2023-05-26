@@ -47,4 +47,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Blog::class);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+    public function isOwner(Blog $blog): bool
+    {
+        return $this->id === $blog->user_id;
+    }
 }

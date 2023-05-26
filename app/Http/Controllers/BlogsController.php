@@ -14,9 +14,22 @@ class BlogsController extends Controller
 {
     //
 
+    public function __construct()
+    {
+        $this->middleware(['validateAuthor'])->only(['edit', 'update', 'destroy', 'trash']);
+    }
     public function index()
     {
-        $blogs = Blog::with('category')->latest()->paginate(10);
+        $authUser = auth()->user();
+        if ($authUser->isAdmin()) {
+            $blogs = Blog::with('category')->latest()->paginate(10);
+        } else {
+            $blogs = Blog::with('category')
+                ->where('user_id', $authUser->id)
+                ->latest()
+                ->paginate(10);
+        }
+
         return view('admin.blogs.index', compact('blogs'));
     }
 
@@ -80,6 +93,49 @@ class BlogsController extends Controller
         session()->flash('success', 'Blog created successfully');
         return redirect(route('admin.blogs.index'));
 
+
+    }
+
+
+    public function trash(Blog $blog)
+    {
+        //dd($blog);
+        $blog->delete();
+        session()->flash('success', 'Blog Deleted Successfully');
+        return redirect(route('admin.blogs.index'));
+    }
+
+    public function destroy(int $blogId)
+    {
+        $blog = Blog::onlyTrashed()->find($blogId);
+        $blog->deleteImage();
+        $blog->forceDelete();
+
+        session()->flash('success', 'Blog Destroyed Successfully');
+        return redirect(route('admin.blogs.trashed'));
+    }
+
+    public function trashed()
+    {
+        $blogs = Blog::with('category')
+            ->where('user_id', auth()->id())
+            ->onlyTrashed()
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.blogs.trashed', compact('blogs'));
+    }
+
+
+    public function restore(int $blogId)
+    {
+
+        //dd($blogId);
+        $blog = Blog::withTrashed()->find($blogId);
+        $blog->restore();
+
+        session()->flash('success', 'Blog Restored Successfully');
+        return redirect(route('admin.blogs.index'));
 
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->timestamp('published_at')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')

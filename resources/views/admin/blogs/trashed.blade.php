@@ -32,12 +32,13 @@
                                 <td>{{ $blog->category->name }}</td>
 
                                 <td>
-                                    <a href="{{ route('admin.blogs.edit', $blog->id) }}" class="btn btn-primary">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#restoreModal"
+                                        onclick="restoreModalHelper('{{ route('admin.blogs.restore', $blog->id) }}')">
+                                        <i class="fa fa-recycle"></i>
+                                    </button>
 
                                     <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
-                                        onclick="deleteModalHelper('{{ route('admin.blogs.trash', $blog->id) }}')">
+                                        onclick="deleteModalHelper('{{ route('admin.blogs.destroy', $blog->id) }}')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
@@ -76,6 +77,33 @@
             </form>
         </div>
     </div>
+
+
+
+    {{-- Restore Modal --}}
+    <div class="modal fade" id="restoreModal" tabindex="-1" role="dialog" aria-labelledby="restoreModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="" method="POST" id="restoreForm">
+                @csrf
+                @method('PUT')
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Restore category?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Are you sure you want to restore the category?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-secondary" type="submit">Restore</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -84,6 +112,13 @@
 
             console.log(url); //   http://localhost:8000/admin/categories/2
             document.getElementById("deleteForm").setAttribute('action', url);
+        }
+
+
+        function restoreModalHelper(url) {
+
+            // console.log(url); //   http://localhost:8000/admin/categories/2
+            document.getElementById("restoreForm").setAttribute('action', url);
         }
     </script>
 @endsection
