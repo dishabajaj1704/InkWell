@@ -22,13 +22,13 @@ class CreateBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            // 'title' => 'required|max:255',
-            // 'excerpt' => 'required|max:255',
-            // 'body' => 'required',
-            // 'category_id' => 'required|exists:categories,id',
-            // 'tags' => 'required|exists:tags,id',
-            // 'image' => 'required|image|mimes:png,jpg,svg|max:1024'
+
+            'title' => 'required|max:255',
+            'excerpt' => 'required|max:255',
+            'body' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'tags' => 'required|exists:tags,id',
+            'image' => 'required|image|mimes:png,jpg,svg|max:1024'
         ];
     }
 }
