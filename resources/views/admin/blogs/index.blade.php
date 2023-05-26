@@ -25,7 +25,8 @@
                             <tr>
                                 <td>{{ $blog->id }}</td>
                                 <td>
-                                    <img src="{{ asset($blog->image_path) }}" alt="{{ $blog->title }}" width="80px">
+                                    <img src="{{ asset('storage/' . $blog->image_path) }}" alt="{{ $blog->title }}"
+                                        width="80px">
                                 </td>
                                 <td>{{ $blog->title }}</td>
                                 <td>{{ $blog->excerpt }}</td>

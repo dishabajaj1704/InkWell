@@ -70,8 +70,8 @@ class BlogsSeeder extends Seeder
         $tags = Tag::all();
         $blog1->tags()->attach(
             $tags->random(rand(2, $tags->count()))
-                ->pluck('id')
-                ->toArray()
+                ->pluck('id') //collection return karta hai
+                ->toArray() //collection to array because attach wants array as parameter
         );
         $blog2->tags()->attach(
             $tags->random(rand(2, $tags->count()))

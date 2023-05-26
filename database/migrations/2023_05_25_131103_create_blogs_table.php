@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('excerpt');
-            $table->longText('body');
+            $table->longText('body'); //longtext can contain infinite words
             $table->string('image_path');
             $table->timestamp('published_at')->nullable();
             $table->unsignedBigInteger('user_id');
