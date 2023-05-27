@@ -12,6 +12,10 @@ class Blog extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = [];
 
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');

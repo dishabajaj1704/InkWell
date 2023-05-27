@@ -25,6 +25,20 @@
             dateForrmat: "Y-m-d H:i",
 
         });
+
+
+        $(".file_field").change(function(evt) {
+            let file_input = $('#image_path');
+            console.log(file_input[0].files[0]);
+
+            if (file_input && file_input[0].files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(evt) {
+                    $("#preview").attr('src', evt.target.result);
+                };
+                reader.readAsDataURL(file_input[0].files[0]);
+            }
+        });
     </script>
 @endsection
 
@@ -152,11 +166,11 @@
                             <!-- image file -->
                             <div class="row">
                                 <div class="col-md-4">
-                                    <img src="{{ asset($blog->image_path) }}" alt="" width="100%">
+                                    <img src="{{ asset($blog->image_path) }}" alt="" width="100%" id="preview">
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <div class="form-group">
+                                <div class="form-group  file_field">
                                     <label for="image_path" class="form-label">Image</label>
                                     <input type="file" name="image" id="image_path"
                                         class="form-control @error('image_path') border-danger text-danger @enderror"

@@ -18,7 +18,9 @@
                         <th>Title</th>
                         <th>Excerpt</th>
                         <th>Category</th>
+                        <th>Deleted_at</th>
                         <th>Actions</th>
+
                     </thead>
                     <tbody>
                         @foreach ($blogs as $blog)
@@ -30,7 +32,7 @@
                                 <td>{{ $blog->title }}</td>
                                 <td>{{ $blog->excerpt }}</td>
                                 <td>{{ $blog->category->name }}</td>
-
+                                <td>{{ $blog->deleted_at }}</td>
                                 <td>
                                     <button class="btn btn-danger" data-toggle="modal" data-target="#restoreModal"
                                         onclick="restoreModalHelper('{{ route('admin.blogs.restore', $blog->id) }}')">
@@ -42,6 +44,8 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
+
+
                             </tr>
                         @endforeach
                     </tbody>

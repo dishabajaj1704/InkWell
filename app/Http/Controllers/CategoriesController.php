@@ -12,6 +12,11 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware(['validateAdmin'])->only(['edit', 'update', 'destroy', 'trash', 'create']);
+    }
     public function index()
     {
         //
@@ -90,13 +95,54 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Category $category)
-    {
-        //TODO:Validte whether the category has post associated with it.uf not then only proceed.
+    // public function destroy(Request $request, Category $category)
+    // {
+    //     //TODO:Validte whether the category has post associated with it.uf not then only proceed.
 
+    //     $category->delete();
+    //     session()->flash('success', 'Category deleted successfully...');
+    //     return redirect(route('admin.categories.index'));
+
+    // }
+    public function trash(Category $category)
+    {
+        //dd($blog);
         $category->delete();
-        session()->flash('success', 'Category deleted successfully...');
+        session()->flash('success', 'Category Deleted Successfully');
         return redirect(route('admin.categories.index'));
+    }
+
+    public function destroy(int $blogId)
+    {
+        $blog = Blog::onlyTrashed()->find($blogId);
+        $blog->deleteImage();
+        $blog->forceDelete();
+
+        session()->flash('success', 'Blog Destroyed Successfully');
+        return redirect(route('admin.blogs.trashed'));
+    }
+
+    public function trashed()
+    {
+        $blogs = Blog::with('category')
+            ->where('user_id', auth()->id())
+            ->onlyTrashed()
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.blogs.trashed', compact('blogs'));
+    }
+
+
+    public function restore(int $blogId)
+    {
+
+        //dd($blogId);
+        $blog = Blog::withTrashed()->find($blogId);
+        $blog->restore();
+
+        session()->flash('success', 'Blog Restored Successfully');
+        return redirect(route('admin.blogs.index'));
 
     }
 }
