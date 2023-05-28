@@ -24,7 +24,7 @@
                             <tr>
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
-                                <td>0</td>
+                                <td>{{ $category->blogs->count() }}</td>
                                 <td>
                                     <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-primary">
                                         <i class="fas fa-pen"></i>

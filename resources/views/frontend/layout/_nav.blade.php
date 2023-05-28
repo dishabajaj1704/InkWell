@@ -17,6 +17,10 @@
                 <li>
                     <a href="index.html" data-toggle="dropdown" class="dropdown-toggle color-light">Home </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('login') }}" class="dropdown-toggle color-light">Login</a>
+                </li>
             </ul>
 
         </div>

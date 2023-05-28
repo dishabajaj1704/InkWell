@@ -22,7 +22,7 @@ class CategoriesController extends Controller
         //
         // $categories = Category::paginate(2);
         //$categories = Category::latest()->paginate(2);
-        $categories = Category::orderBy('id', 'desc')->paginate(4);
+        $categories = Category::withCount('blogs')->latest('updated_at')->paginate(20);
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -95,54 +95,58 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Request $request, Category $category)
-    // {
-    //     //TODO:Validte whether the category has post associated with it.uf not then only proceed.
-
-    //     $category->delete();
-    //     session()->flash('success', 'Category deleted successfully...');
-    //     return redirect(route('admin.categories.index'));
-
-    // }
-    public function trash(Category $category)
+    public function destroy(Request $request, Category $category)
     {
-        //dd($blog);
+        //TODO:Validte whether the category has post associated with it.uf not then only proceed.
+        if ($category->blogs->count() > 0) {
+            session()->flash('error', 'Category cannot be deleted as it has posts associated!');
+            return redirect(route('admin.categories.index'));
+        }
         $category->delete();
-        session()->flash('success', 'Category Deleted Successfully');
+        session()->flash('success', 'Category deleted successfully...');
         return redirect(route('admin.categories.index'));
-    }
-
-    public function destroy(int $blogId)
-    {
-        $blog = Blog::onlyTrashed()->find($blogId);
-        $blog->deleteImage();
-        $blog->forceDelete();
-
-        session()->flash('success', 'Blog Destroyed Successfully');
-        return redirect(route('admin.blogs.trashed'));
-    }
-
-    public function trashed()
-    {
-        $blogs = Blog::with('category')
-            ->where('user_id', auth()->id())
-            ->onlyTrashed()
-            ->latest()
-            ->paginate(10);
-
-        return view('admin.blogs.trashed', compact('blogs'));
-    }
-
-
-    public function restore(int $blogId)
-    {
-
-        //dd($blogId);
-        $blog = Blog::withTrashed()->find($blogId);
-        $blog->restore();
-
-        session()->flash('success', 'Blog Restored Successfully');
-        return redirect(route('admin.blogs.index'));
 
     }
+// public function trash(Category $category)
+// {
+//     //dd($blog);
+//     $category->delete();
+//     session()->flash('success', 'Category Deleted Successfully');
+//     return redirect(route('admin.categories.index'));
+// }
+
+// public function destroy(int $blogId)
+// {
+
+//     $blog = Blog::onlyTrashed()->find($blogId);
+//     $blog->deleteImage();
+//     $blog->forceDelete();
+
+//     session()->flash('success', 'Blog Destroyed Successfully');
+//     return redirect(route('admin.blogs.trashed'));
+// }
+
+// public function trashed()
+// {
+//     $blogs = Blog::with('category')
+//         ->where('user_id', auth()->id())
+//         ->onlyTrashed()
+//         ->latest()
+//         ->paginate(10);
+
+//     return view('admin.blogs.trashed', compact('blogs'));
+// }
+
+
+// public function restore(int $blogId)
+// {
+
+//     //dd($blogId);
+//     $blog = Blog::withTrashed()->find($blogId);
+//     $blog->restore();
+
+//     session()->flash('success', 'Blog Restored Successfully');
+//     return redirect(route('admin.blogs.index'));
+
+// }
 }

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('/categories/{category}/blogs', [FrontendController::class, 'category'])->name('frontend.category');
+Route::get('/tags/{tag}/blogs', [FrontendController::class, 'tag'])->name('frontend.tag');
+Route::get('/blogs/{blog}', [FrontendController::class, 'show'])->name('frontend.blogs.show');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
