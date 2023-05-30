@@ -28,7 +28,8 @@ class BlogsSeeder extends Seeder
             'image_path' => 'blogs/1.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
-            'published_at' => Carbon::now()->format('Y-m-d H:i:s')
+            'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'blog_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         $blog2 = Blog::create([
             'title' => fake()->sentence(7),
@@ -37,7 +38,8 @@ class BlogsSeeder extends Seeder
             'image_path' => 'blogs/2.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
-            'published_at' => Carbon::now()->format('Y-m-d H:i:s')
+            'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'blog_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         $blog3 = Blog::create([
             'title' => fake()->sentence(7),
@@ -46,7 +48,8 @@ class BlogsSeeder extends Seeder
             'image_path' => 'blogs/3.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
-            'published_at' => Carbon::now()->format('Y-m-d H:i:s')
+            'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'blog_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         $blog4 = Blog::create([
             'title' => fake()->sentence(7),
@@ -55,7 +58,8 @@ class BlogsSeeder extends Seeder
             'image_path' => 'blogs/4.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
-            'published_at' => Carbon::now()->format('Y-m-d H:i:s')
+            'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'blog_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         $blog5 = Blog::create([
             'title' => fake()->sentence(7),
@@ -64,7 +68,8 @@ class BlogsSeeder extends Seeder
             'image_path' => 'blogs/5.jpg',
             'category_id' => $categories->random()->id,
             'user_id' => $users->random()->id,
-            'published_at' => Carbon::now()->format('Y-m-d H:i:s')
+            'published_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'blog_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         $tags = Tag::all();

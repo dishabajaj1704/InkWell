@@ -18,6 +18,7 @@
                         <th>Title</th>
                         <th>Excerpt</th>
                         <th>Category</th>
+                        <th>blog_verify_at</th>
                         <th>Actions</th>
                     </thead>
                     <tbody>
@@ -30,24 +31,19 @@
                                 <td>{{ $blog->title }}</td>
                                 <td>{{ $blog->excerpt }}</td>
                                 <td>{{ $blog->category->name }}</td>
+                                <td>{{ $blog->blog_verified_at }}</td>
 
                                 <td>
-                                    <a href="{{ route('admin.blogs.edit', $blog->id) }}" class="btn btn-primary">
+                                    {{-- <a href="{{ route('admin.blogs.edit', $blog->id) }}" class="btn btn-primary">
                                         <i class="fas fa-pen"></i>
-                                    </a>
+                                    </a> --}}
 
-                                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
-                                        onclick="deleteModalHelper('{{ route('admin.blogs.trash', $blog->id) }}')">
-                                        <i class="fa fa-trash"></i>
+                                    <button
+                                        class="{{ $blog->blog_verified_at == null ? 'btn btn-success' : 'btn btn-danger' }}"
+                                        data-toggle="modal" data-target="#verifyBlogModal"
+                                        onclick="verifyBlogModalHelper('{{ route('admin.blogs.verifyBlog', $blog->id) }}')">
+                                        {{ $blog->blog_verified_at == null ? 'Verify Blog' : 'Unverify Blog' }}
                                     </button>
-
-
-                                    <button class="btn btn-warning" data-toggle="modal" data-target="#draftModal"
-                                        onclick="draftModalHelper('{{ route('admin.blogs.draft', $blog->id) }}')">
-                                        <i class="fa fa-file"></i>
-                                    </button>
-
-
                                 </td>
                             </tr>
                         @endforeach
@@ -61,48 +57,22 @@
         </div>
     </div>
     {{-- Delete Modal --}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    <div class="modal fade" id="verifyBlogModal" tabindex="-1" role="dialog" aria-labelledby="verifyBlogModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form action="" method="POST" id="deleteForm">
+            <form action="" method="POST" id="verifyBlogForm">
                 @csrf
-                @method('DELETE')
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete category?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Verify Blog</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Are you sure you want to delete the category?</div>
+                    <div class="modal-body">Are you sure you want to make changes?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <button class="btn btn-secondary" type="submit">Delete</button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
-
-
-    {{-- Draft Modal --}}
-    <div class="modal fade" id="draftModal" tabindex="-1" role="dialog" aria-labelledby="draftModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form action="" method="POST" id="draftForm">
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Draft Post?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Are you sure you want to draft the post?</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <button class="btn btn-secondary" type="submit">Draft </button>
+                        <button class="btn btn-secondary" type="submit">Yes</button>
                     </div>
                 </div>
 
@@ -113,16 +83,10 @@
 
 @section('scripts')
     <script>
-        function deleteModalHelper(url) {
+        function verifyBlogModalHelper(url) {
 
-            console.log(url);
-            document.getElementById("deleteForm").setAttribute('action', url);
-        }
-
-        function draftModalHelper(url) {
-
-            console.log(url);
-            document.getElementById("draftForm").setAttribute('action', url);
+            console.log(url); //   http://localhost:8000/admin/categories/2
+            document.getElementById("verifyBlogForm").setAttribute('action', url);
         }
     </script>
 @endsection

@@ -8,6 +8,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Tag;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BlogsController extends Controller
@@ -22,15 +23,19 @@ class BlogsController extends Controller
     {
         $authUser = auth()->user();
         if ($authUser->isAdmin()) {
-            $blogs = Blog::with('category')->latest()->paginate(10);
+            $blogs = Blog::with('category')->where('published_at', '!=', 'null')->latest()->paginate(10);
+            return view('admin.blogs.admin_index', compact('blogs'));
+
         } else {
             $blogs = Blog::with('category')
                 ->where('user_id', $authUser->id)
+                ->where('published_at', '!=', 'null')
                 ->latest()
                 ->paginate(10);
+            return view('admin.blogs.index', compact('blogs'));
+
         }
 
-        return view('admin.blogs.index', compact('blogs'));
     }
 
     public function create()
@@ -46,13 +51,15 @@ class BlogsController extends Controller
     public function store(CreateBlogRequest $request)
     {
 
+        //dd($request);
         //Image upload and return the name of the file whihch wil be created.
         $image_path = $request->file('image')->store('blogs');
         $data = $request->only(['title', 'excerpt', 'body', 'category_id', 'published_at']);
 
         $data = array_merge($data, [
             'image_path' => $image_path,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+            'blog_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         $blog = Blog::create($data);
@@ -137,5 +144,48 @@ class BlogsController extends Controller
         session()->flash('success', 'Blog Restored Successfully');
         return redirect(route('admin.blogs.index'));
 
+    }
+
+    public function verifyBlog(Blog $blog)
+    {
+        // dd($blog->blog_verified_at);
+        if ($blog->blog_verified_at != null) {
+            $blog->blog_verified_at = null;
+            $blog->save();
+        } else if ($blog->blog_verified_at == null) {
+            $blog->blog_verified_at = Carbon::now()->format('Y-m-d H:i:s');
+            $blog->save();
+        }
+        return redirect(route('admin.blogs.index'));
+    }
+
+    public function drafted()
+    {
+        $blogs = Blog::with('category')
+            ->where('user_id', auth()->id())
+            ->whereNull('published_at')
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.blogs.drafted', compact('blogs'));
+
+    }
+
+    public function draft(Blog $blog)
+    {
+        $blog->published_at = null;
+        $blog->save();
+
+        return redirect(route('admin.blogs.index'));
+    }
+
+
+    public function undraft(Request $request, Blog $blog)
+    {
+        // dd($request->published_at);
+        $blog->published_at = $request->published_at;
+        $blog->save();
+
+        return redirect(route('admin.blogs.index'));
     }
 }

@@ -23,8 +23,21 @@
             altInput: true,
             altFormat: "F j, Y H:i",
             dateForrmat: "Y-m-d H:i",
+            maxDate: "today"
 
         });
+
+        function saveAsDraft() {
+
+            console.log("Hey saveDraft")
+            var saveDraft = document.getElementById("saveDraft");
+            var published_at = document.getElementById("published_at_fg");
+            if (saveDraft.checked == true) {
+                published_at.style.display = "none";
+            } else {
+                published_at.style.display = "block";
+            }
+        }
     </script>
 @endsection
 
@@ -129,9 +142,11 @@
                             </div>
                             <!--end of tags -->
 
+                            <input type="checkbox" id="saveDraft" name="saveDraft" value="" onclick="saveAsDraft()">
+                            <label for="saveDraft">Save as Draft</label>
 
                             <!-- puublished at -->
-                            <div class="form-group">
+                            <div class="form-group" id="published_at_fg">
                                 <label for="published_at" class="form-label">Published At</label>
                                 <input type="date" name="published_at" id="published_at"
                                     value="{{ old('published_at') }}"

@@ -27,7 +27,7 @@
     </header>
 
     <!-- Blog Area
-                                                                                            ===================================== -->
+                                                                                                ===================================== -->
     <div id="blog" class="pt20 pb50">
         <div class="container">
 
@@ -59,13 +59,13 @@
                     </div>
 
                     <!-- Blog Paging
-                                                                                                            ===================================== -->
+                                                                                                                ===================================== -->
 
                     {{ $blogs->appends(['search' => request()->search])->links('pagination::simple-bootstrap-5') }}
 
                 </div>
                 <!-- Blog Sidebar
-                                                                                ===================================== -->
+                                                                                    ===================================== -->
                 @include('frontend.layout._sidebar')
 
 
@@ -76,7 +76,7 @@
 
 
     <!-- Newsletter Area
-                                                                                            =====================================-->
+                                                                                                =====================================-->
     <div id="newsletter" class="bg-dark2 pt50 pb50">
         <div class="container">
             <div class="row">

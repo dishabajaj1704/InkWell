@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\ValidateAdmin;
 use App\Http\Middleware\ValidateAuthor;
+use App\Http\Middleware\VerifyUsers;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'validateAuthor' => ValidateAuthor::class,
-        'validateAdmin' => ValidateAdmin::class
+        'validateAdmin' => ValidateAdmin::class,
+        'verifyUsers' => VerifyUsers::class
     ];
 }

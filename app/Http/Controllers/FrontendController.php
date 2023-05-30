@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class FrontendController extends Controller
         //     ->orderBy('published_at', 'desc')
         //     ->simplePaginate(3);
 
-        $blogs = Blog::with('author')->search()->published()
+        $blogs = Blog::with('author')->where('blog_verified_at', '!=', 'null')->search()->published()
             ->orderBy('published_at', 'desc')
             ->simplePaginate(3);
 
@@ -27,7 +28,8 @@ class FrontendController extends Controller
         return view('frontend.index', compact([
             'categories',
             'tags',
-            'blogs'
+            'blogs',
+
         ]));
 
         //withCount:  pura blog object return karne ke bijaye sirfe count return karta hai
@@ -57,6 +59,20 @@ class FrontendController extends Controller
         $blogTags = $blog->tags;
         $categories = Category::withCount('blogs')->get(); #for sidebar
         $tags = Tag::limit(10)->get(); #for sidebar
-        return view('frontend.blog', compact(['categories', 'tags', 'blog', 'blogTags']));
+        $comments = Comment::with('author', 'blog')->where('blog_id', '=', $blog->id)->where('verified_at', '!=', null)->get();
+        return view('frontend.blog', compact(['categories', 'tags', 'blog', 'blogTags', 'comments']));
+    }
+
+
+    public function destroy(Comment $comment)
+    {
+
+        //dd($comment->blog_id);
+        $blog = Blog::find($comment->blog_id);
+        //dd($blog);
+        $comment->delete();
+        session()->flash('success', 'Category deleted successfully...');
+        return redirect(route('frontend.blogs.show', $blog));
+
     }
 }
