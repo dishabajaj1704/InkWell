@@ -1,8 +1,17 @@
 @extends('frontend.layout.app')
 
+
+@section('styles')
+    <style>
+        .deleteIcon {
+            border: 0;
+            background: none;
+        }
+    </style>
+@endsection
 @section('content')
     <!-- Blog Area
-                                                                                                                                                                                                                                                                                                                                                                    ===================================== -->
+                                                                                                                                                                                                                                                                                                                                                                                    ===================================== -->
     <section id="blog" class="pt75 pb50">
         <div class="container">
 
@@ -69,7 +78,8 @@
                                     onclick="deleteModalHelper('{{ route('frontend.comments.destroy', $comment->id) }}')">
                                     <i class="fa fa-trash"></i>
                                 </button> --}}
-                                <button class="pull-right text-gray" data-toggle="modal" data-target="#deleteModal"
+                                <button class="pull-right text-gray deleteIcon" data-toggle="modal"
+                                    data-target="#deleteModal"
                                     onclick="deleteModalHelper('{{ route('frontend.comments.destroy', $comment->id) }}')"><i
                                         class="fa fa-trash"></i></button>
                                 <p>
@@ -118,7 +128,7 @@
 
 
         <!-- Newsletter Area
-                                                                                                                                                                                                                                                                                                                                                        =====================================-->
+                                                                                                                                                                                                                                                                                                                                                                        =====================================-->
         <section id="newsletter" class="bg-dark2 pt50 pb50">
             <div class="container">
                 <div class="row">
