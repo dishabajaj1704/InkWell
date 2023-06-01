@@ -57,7 +57,7 @@ class RegisteredUserController extends Controller
     public function index()
     {
 
-        $users = User::where('id', '!=', auth()->user()->id)->orderBy('id', 'asc')->paginate(10);
+        $users = User::orderBy('id', 'asc')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
@@ -78,12 +78,21 @@ class RegisteredUserController extends Controller
 
         } else if ($user->role === 'admin') {
 
-            if ($user->email_verified_at != null) {
-                $user->role = 'author';
-                $user->save();
+
+            $role = User::all()->where('role', 'admin')->count();
+
+            if ($role > 1) {
+                if ($user->email_verified_at != null) {
+                    $user->role = 'author';
+                    $user->save();
+                } else {
+                    session()->flash('success', 'Changes Made successfully!');
+                }
+
             } else {
-                session()->flash('success', 'Changes Made successfully!');
+                session()->flash('error', 'Cannot Switch to Author. Please make someone admin');
             }
+
 
         }
 

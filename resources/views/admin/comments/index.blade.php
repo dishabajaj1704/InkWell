@@ -14,10 +14,11 @@
                 <table class="table table-bordered">
                     <thead>
                         <th>Id</th>
-                        <th>User Id</th>
+                        <th>User Email</th>
                         <th>User Name</th>
                         <th>Blog Id</th>
                         <th>Comment Verification</th>
+                        <th>Verified_by</th>
                         <th>Message</th>
                         <th>Verify Comment</th>
                         <th>Delete</th>
@@ -26,10 +27,11 @@
                         @foreach ($comments as $comment)
                             <tr>
                                 <td>{{ $comment->id }}</td>
-                                <td>{{ $comment->user_id }}</td>
-                                <td>{{ $comment->author->name }}</td>
+                                <td>{{ $comment->user_email }}</td>
+                                <td>{{ $comment->user_name }}</td>
                                 <td>{{ $comment->blog_id }}</td>
                                 <td>{{ $comment->verified_at }}</td>
+                                <td>{{ $comment->verified_by }}</td>
                                 <td>{{ $comment->message }}</td>
 
 

@@ -13,20 +13,23 @@ return new class extends Migration {
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->string('user_name')->nullable();
+            $table->string('user_email')->nullable();
             $table->unsignedBigInteger('blog_id');
+            $table->string('verified_by')->default('admin');
             $table->timestamp('verified_at')->nullable();
             $table->longText('message');
+            // $table->text('role')->default('reader');
 
             $table->foreign('blog_id')
                 ->references('id')
                 ->on('blogs')
                 ->onDelete('cascade');
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            // $table->foreign('user_id')
+            //     ->references('id')
+            //     ->on('users')
+            //     ->onDelete('cascade');
 
             $table->timestamps();
         });

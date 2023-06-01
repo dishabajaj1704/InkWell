@@ -66,4 +66,5 @@ class User extends Authenticatable
     {
         return $this->email_verified_at != null;
     }
+
 }

@@ -11,7 +11,7 @@
 @endsection
 @section('content')
     <!-- Blog Area
-                                                                                                                                                                                                                                                                                                                                                                                    ===================================== -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                ===================================== -->
     <section id="blog" class="pt75 pb50">
         <div class="container">
 
@@ -71,7 +71,7 @@
                         @foreach ($comments as $comment)
                             <div class="blog-post-comment">
                                 <img src="assets/img/other/photo-2.jpg" class="img-circle" alt="image">
-                                <span class="blog-post-comment-name">{{ $comment->author->name }}</span>
+                                <span class="blog-post-comment-name">{{ $comment->user_name }}</span>
                                 {{ $comment->verified_at->diffForHumans() }}
                                 <a href="#" class="pull-right text-gray"><i class="fa fa-comment"></i></a>
                                 {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
@@ -103,10 +103,12 @@
                         <form action="{{ route('comments.store') }}" method="POST">
                             @csrf
                             <input type="hidden" value="{{ $blog->id }}" name="blog_Id">
-                            {{-- <input type="text" name="name" class="blog-leave-comment-input" placeholder="name"
-                                required>
-                            <input type="email" name="email" class="blog-leave-comment-input" placeholder="email"
-                                required> --}}
+                            @if (!auth()->user())
+                                <input type="text" name="name" class="blog-leave-comment-input" placeholder="name"
+                                    required>
+                                <input type="email" name="email" class="blog-leave-comment-input" placeholder="email"
+                                    required>
+                            @endif
                             {{-- <input type="url" name="name" class="blog-leave-comment-input" placeholder="website"> --}}
                             <textarea name="comment" class="blog-leave-comment-textarea"></textarea>
                             <button class="button button-pasific button-sm center-block mb25">Leave Comment</button>
@@ -128,7 +130,7 @@
 
 
         <!-- Newsletter Area
-                                                                                                                                                                                                                                                                                                                                                                        =====================================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                    =====================================-->
         <section id="newsletter" class="bg-dark2 pt50 pb50">
             <div class="container">
                 <div class="row">

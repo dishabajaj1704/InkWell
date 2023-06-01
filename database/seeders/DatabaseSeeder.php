@@ -70,19 +70,25 @@ class DatabaseSeeder extends Seeder
             'message' => fake()->sentence(7),
             'verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'blog_id' => $blogs->random()->id,
-            'user_id' => $users->random()->id,
+            'user_name' => fake()->word(),
+            'user_email' => fake()->email(),
+            // 'user_id' => $users->random()->id,
         ]);
         $comment2 = Comment::create([
             'message' => fake()->sentence(7),
             'verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'blog_id' => $blogs->random()->id,
-            'user_id' => $users->random()->id,
+            'user_name' => fake()->word(),
+            'user_email' => fake()->email(),
+            // 'user_id' => $users->random()->id,
         ]);
         $comment3 = Comment::create([
             'message' => fake()->sentence(7),
             'verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'blog_id' => $blogs->random()->id,
-            'user_id' => $users->random()->id,
+            'user_name' => fake()->word(),
+            'user_email' => fake()->email(),
+            // 'user_id' => $users->random()->id,
         ]);
     }
 }
